@@ -3,31 +3,33 @@ import { body, validationResult  } from 'express-validator';
 import { hadleInputErrors } from './modules/middleware';
 import { version } from 'os';
 import { INSPECT_MAX_BYTES } from 'buffer';
-import { createProduct, getOneProduct, getProducts } from './handlers/product';
+import { createProduct, deleteProduct, getOneProduct, getProducts, updateProduct } from './handlers/product';
+import { createUpdate, deleteUpdate, getOneUpdate, getUpdates, updateUpdate } from './handlers/update';
 
 const router = Router()
 
 router.get("/product", getProducts)
-router.get("/product/:id", () => {})
+router.get("/product/:id", getOneProduct)
 router.post("/product",  body('name').isString(), hadleInputErrors, createProduct,(req, res) => {})
 router.put("/product/:id", body('name').isString(), hadleInputErrors,(req, res) => {})
-router.delete("/product/:id", () => {})
+router.delete("/product/:id",deleteProduct)
 
-router.get("/update", () => {})
-router.get("/update/:id",()=> {})
+router.get("/update", getUpdates)
+router.get("/update/:id",getOneUpdate)
 router.put("/update/:id",
     body('title').optional(),
     body('body').optional(),
     body('version').optional(), 
-    body('status').isIn(['IN_PROGRESS', 'SHIPPED', 'DEPRECEATED']),
-    (req, res)  => {}
+    body('status').isIn(['IN_PROGRESS', 'SHIPPED', 'DEPRECEATED']).optional(),
+    updateUpdate
 )
 router.post("/update",
     body('title').exists().isString(),
     body('body').exists().isString(),
-    (req, res)  => {}
+    body('productId').exists().isString(),
+    createUpdate
 )
-router.delete("/update/:id", () => {})
+router.delete("/update/:id", deleteUpdate)
 
 router.get("/updatepoint", () => {})
 router.get("/updatepoint/:id", () => {})
