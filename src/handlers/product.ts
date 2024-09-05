@@ -1,6 +1,5 @@
 import { error } from "console"
 import prisma from "../db"
-import { BlockReason } from "@google/generative-ai"
 
 export const getProducts = async (req, res) => { //Get all 
     console.log("User ID from request:", req.user.id); // Log the user ID
