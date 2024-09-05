@@ -45,7 +45,6 @@ export const createProduct = async (req, res, next) => {
                 belongsToId: req.user.id
             }
         })
-        
     
         res.json({data: product})
     } catch (e) {
